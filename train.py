@@ -49,13 +49,6 @@ file_log_stdout = open(PATH_LOG_STDOUT, "a")
 sys.stdout = utils.Tee(sys.__stdout__, file_log_stdout)
 
 
-
-
-
-
-
-
-
 transform = transforms.Compose(
     [
         transforms.Resize((240,)),
@@ -64,7 +57,6 @@ transform = transforms.Compose(
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))  # TODO: find better values
     ]
 )
-
 
 dataset_train = ImageFolder(r"data/split/train", transform)
 dataset_val = ImageFolder(r"data/split/val", transform)
@@ -86,32 +78,13 @@ loader_val = torch.utils.data.DataLoader(
 )
 
 
-model = Toy(
+model = BreedClassifier(
     params["num_classes"],
 ).to(params["device"])
 
 
 optimizer = torch.optim.Adam(model.parameters(), lr=params["lr"])
 criterion = nn.CrossEntropyLoss()
-
-
-# for epoch in tqdm(
-#     range(params["num_epochs"]),
-#     "Epoch"
-# ):
-#     # training loop
-#     model.train()
-#     for features, target in loader_train:
-#         # training step
-#         optimizer.zero_grad()
-#         features = features.to(params["device"])
-#         target = target.to(params["device"])
-#         pred = model(features)
-#         loss = criterion(pred, target)
-#         loss.backward()
-#         optimizer.step()
-#         print(loss.item())
-
 
 
 ############### TRAINING ###############################################

@@ -4,6 +4,6 @@
     "lr": 0.0001,
     "batch_size": 16,
     "device": "cuda",
-    "run_name": "test2",
+    "run_name": "BreedClassifier",
     "max_samples": 23
 }
