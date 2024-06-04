@@ -1,3 +1,9 @@
 {
-    "num_classes": 120
+    "num_classes": 120,
+    "num_epochs": 100,
+    "lr": 0.0001,
+    "batch_size": 16,
+    "device": "cuda",
+    "run_name": "test2",
+    "max_samples": 23
 }
