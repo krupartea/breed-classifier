@@ -54,7 +54,7 @@ transform = transforms.Compose(
         transforms.Resize((240,)),
         transforms.CenterCrop((240, 240)),  # TODO: replace with RandomCrop, but not for val
         transforms.ToTensor(),
-        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))  # TODO: find better values
+        transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
     ]
 )
 
@@ -78,7 +78,7 @@ loader_val = torch.utils.data.DataLoader(
 )
 
 
-model = BreedClassifier(
+model = Resnet(
     params["num_classes"],
 ).to(params["device"])
 

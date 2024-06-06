@@ -1,4 +1,31 @@
 import torch.nn as nn
+from torchvision.models.resnet import resnet152, ResNet152_Weights
+import torch
+
+
+class Resnet(nn.Module):
+    def __init__(
+            self,
+            num_classes,
+    ):
+        super().__init__()
+
+        self.resnet = resnet152(weights=ResNet152_Weights.IMAGENET1K_V1)
+        # replace ResNet's last fc layer with such that suits `num_classes`
+        in_features = list(self.resnet.children())[-1].in_features
+        self.classifier = nn.Linear(in_features, num_classes)
+        # freeze ResNet's weights
+        for param in self.resnet.parameters():
+            param.requires_grad = False
+        # remove ResNet's last fc layer (we'll use our `self.classifier` instead)
+        modules = list(self.resnet.children())[:-1]
+        self.resnet = nn.Sequential(*modules)
+    
+    def forward(self, x):
+        x = self.resnet(x)
+        x = torch.reshape(x, (x.shape[0], -1))  # flatten, preserving batches
+        x = self.classifier(x)
+        return x
 
 
 class Toy(nn.Module):
@@ -53,6 +80,7 @@ class BreedClassifier(nn.Module):
             nn.AdaptiveAvgPool2d((1, 1)),
             nn.Flatten(),
 
+            # classifier
             nn.Linear(32, 128),
             nn.BatchNorm1d(128),
             nn.ReLU(),
