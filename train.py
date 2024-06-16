@@ -16,7 +16,7 @@ params = utils.load_json(PATH_PARAMS_JSON)
 
 
 # infer subfolders paths
-DIR_RUN = Path("runs", params["run_name"])
+DIR_RUN = Path(params["runs_dir"], params["run_name"])
 # change the run name to a unique one if this run name already exists
 DIR_RUN = utils.make_unique_dir_name(DIR_RUN)
 DIR_LOGS = DIR_RUN / "logs"

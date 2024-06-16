@@ -5,5 +5,6 @@
     "batch_size": 16,
     "device": "cuda",
     "run_name": "Resnet",
-    "max_samples": null
+    "max_samples": null,
+    "runs_dir": "runs"
 }

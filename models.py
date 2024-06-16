@@ -6,7 +6,7 @@ import torch
 class Resnet(nn.Module):
     def __init__(
             self,
-            num_classes,
+            num_classes=120,
     ):
         super().__init__()
 
